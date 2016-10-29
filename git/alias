@@ -1,0 +1,27 @@
+[alias]
+  c = commit -v
+  fixup = commit --fixup
+  amend = commit --amend
+  s = status
+  ss = show --stat -p
+  co = checkout
+  con = rebase --continue
+  di = diff
+  dc = diff --cached
+  dcs = diff --cached --stat
+  ds = diff --stat=160,120
+  dh1 = diff HEAD~1
+  h = !git head
+  hp = "!. ~/.githelpers && show_git_head"
+  rim = rebase -i --autosquash origin/master
+  bm = "!f() { git branch $1 origin/master --no-track && git co $1; }; f"
+  l = "!. ~/.githelpers && pretty_git_log"
+  la = !git l --all
+  lb = !git l origin/master..@
+  lm = "!f() { git checkout master && git reset --hard origin/master; }; f"
+  head = !git l -1
+  r = !git l -30
+  ra = !git r --all
+  pu = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+[rebase]
+  autosquash = true

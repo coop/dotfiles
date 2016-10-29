@@ -1,0 +1,10 @@
+# vim: set ft=gitconfig:
+
+[color]
+  ui = auto
+[push]
+  default = simple
+[gc]
+  auto = 0
+[diff]
+  compactionHeuristic = true

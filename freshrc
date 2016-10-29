@@ -1,0 +1,68 @@
+# xdg
+source "${FRESH_LOCAL}/shell/config/xdg.sh"
+
+# fresh
+fresh "freshshell/fresh" "bin/fresh" --bin
+
+# bash
+fresh-options --file="${HOME}/.bashrc" --marker="#"
+  fresh "shell/config/bashrc.sh"
+  fresh "shell/config/xdg.sh"
+  fresh "shell/config/path.sh"
+  fresh "shell/config/prompt.sh"
+  fresh "shell/config/editor.sh"
+  fresh "shell/config/vim.sh"
+  fresh "shell/config/ruby.sh"
+  fresh "shell/config/node.sh"
+  fresh "shell/config/clipboard.sh"
+  fresh "shell/config/direnv.sh"
+  fresh chriskempson/base16-shell scripts/base16-tomorrow-night.sh
+fresh-options
+
+# scripts
+fresh "bin/*" --bin
+
+# vim
+$FRESH_LOCAL/vim/create-xdg-directories.sh
+
+fresh-options --file="${XDG_CONFIG_HOME}/vim/vimrc" --marker="\""
+  fresh "vim/required.vim"
+  fresh "vim/xdg.vim"
+  fresh "vim/vim-plug/before.vim"
+  fresh "vim/plugins/*.vim"
+  fresh "vim/vim-plug/after.vim"
+  fresh "vim/global.vim"
+  fresh "vim/config/*.vim"
+  fresh "jasoncodes/dotfiles" "vim/config/fast_escape.vim"
+  fresh "vim/mappings.vim"
+  fresh "jasoncodes/dotfiles" "vim/mappings/disable-cursor-keys.vim"
+
+  $FRESH_LOCAL/vim/vim-plug/plug-install.sh
+fresh-options
+
+# git
+$FRESH_LOCAL/git/create-xdg-directories.sh
+$FRESH_LOCAL/git/create-local-config.sh
+
+fresh-options --file="${XDG_CONFIG_HOME}/git/config" --marker="#"
+  fresh "git/config"
+  fresh "git/include" --filter="sed s,XDG_CONFIG_HOME,$XDG_CONFIG_HOME,"
+  fresh "git/alias"
+  fresh "git/aliases/*"
+fresh-options
+
+fresh-options --file="${XDG_CONFIG_HOME}/git/ignore" --marker="#"
+  fresh "github/gitignore" "Global/macOS.gitignore"
+  fresh "github/gitignore" "Global/Tags.gitignore"
+  fresh "github/gitignore" "Global/Vim.gitignore"
+  fresh "github/gitignore" "Ruby.gitignore"
+  fresh "github/gitignore" "Node.gitignore"
+fresh-options
+
+fresh-options --bin
+  fresh "git/bin/*"
+
+  for file in {authors,back,commits-since,contrib,delete-branch,delete-merged-branches,delete-tag,effort,guilt,show-merged-branches,show-unmerged-branches,summary}; do
+    fresh "tj/git-extras" "bin/git-${file}"
+  done
+fresh-options

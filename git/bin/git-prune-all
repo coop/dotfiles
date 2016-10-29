@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Prune all merged local and remote branches
+
+set -o errexit -o pipefail -o noglob -o noclobber -o nounset
+IFS=$'\n\t'
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+remote=$(git config -- "branch.${branch}.remote")
+
+# Remove remote references
+git remote update --prune > /dev/null
+
+# Remove remote branches
+git branch --remotes --merged "$remote/$branch" \
+  | grep --perl-regexp --only-matching "(?<=^  $remote/)(\S+)$" \
+  | (grep --invert-match --extended-regexp "^(release/|pr/|master$|${branch}$)" || true) \
+  | xargs --no-run-if-empty git push --delete -- "$remote" || true
+
+# Remove local branches
+git branch --merged "$branch" \
+  | grep --invert-match --fixed-strings --line-regexp "* $branch" \
+  | xargs --no-run-if-empty git branch --delete -- || true
