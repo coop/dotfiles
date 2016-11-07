@@ -5,23 +5,25 @@ source "${FRESH_LOCAL}/shell/config/xdg.sh"
 fresh "freshshell/fresh" "bin/fresh" --bin
 
 # bash
-fresh-options --file="${HOME}/.bashrc" --marker="#"
-  fresh "shell/config/bashrc.sh"
-  fresh "shell/config/xdg.sh"
-  fresh "shell/functions/*.sh"
-  fresh "shell/config/path.sh"
-  fresh "shell/config/prompt.sh"
-  fresh "shell/config/less.sh"
-  fresh "shell/config/history.sh"
-  fresh chriskempson/base16-shell scripts/base16-tomorrow-night.sh
-  fresh "shell/config/editor.sh"
-  fresh "shell/config/vim.sh"
-  fresh "shell/config/ruby.sh"
-  fresh "shell/config/node.sh"
-  fresh "shell/config/clipboard.sh"
-  fresh "shell/config/direnv.sh"
-  fresh "shell/config/plain.sh"
-fresh-options
+for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
+  fresh-options --file=$file --marker="#"
+    fresh "shell/config/bashrc.sh"
+    fresh "shell/config/xdg.sh"
+    fresh "shell/functions/*.sh"
+    fresh "shell/config/path.sh"
+    fresh "shell/config/prompt.sh"
+    fresh "shell/config/less.sh"
+    fresh "shell/config/history.sh"
+    fresh chriskempson/base16-shell scripts/base16-tomorrow-night.sh
+    fresh "shell/config/editor.sh"
+    fresh "shell/config/vim.sh"
+    fresh "shell/config/ruby.sh"
+    fresh "shell/config/node.sh"
+    fresh "shell/config/clipboard.sh"
+    fresh "shell/config/direnv.sh"
+    fresh "shell/config/plain.sh"
+  fresh-options
+done
 
 # scripts
 fresh "bin/*" --bin
