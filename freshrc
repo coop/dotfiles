@@ -8,6 +8,7 @@ fresh "freshshell/fresh" "bin/fresh" --bin
 fresh-options --file="${HOME}/.bashrc" --marker="#"
   fresh "shell/config/bashrc.sh"
   fresh "shell/config/xdg.sh"
+  fresh "shell/functions/*.sh"
   fresh "shell/config/path.sh"
   fresh "shell/config/prompt.sh"
   fresh "shell/config/editor.sh"
