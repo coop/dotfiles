@@ -18,6 +18,7 @@ fresh-options --file="${HOME}/.bashrc" --marker="#"
   fresh "shell/config/clipboard.sh"
   fresh "shell/config/direnv.sh"
   fresh "shell/config/plain.sh"
+  fresh "shell/config/less.sh"
   fresh chriskempson/base16-shell scripts/base16-tomorrow-night.sh
 fresh-options
 
