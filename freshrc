@@ -42,8 +42,6 @@ fresh-options --file="${XDG_CONFIG_HOME}/vim/vimrc" --marker="\""
   fresh "jasoncodes/dotfiles" "vim/config/fast_escape.vim"
   fresh "vim/mappings.vim"
   fresh "jasoncodes/dotfiles" "vim/mappings/disable-cursor-keys.vim"
-
-  $FRESH_LOCAL/vim/vim-plug/plug-install.sh
 fresh-options
 
 # git
@@ -72,3 +70,7 @@ fresh-options --bin
     fresh "tj/git-extras" "bin/git-${file}"
   done
 fresh-options
+
+fresh_after_build() {
+  $FRESH_LOCAL/vim/vim-plug/plug-install.sh
+}
