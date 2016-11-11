@@ -22,6 +22,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/node.sh"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
+    fresh "shell/config/coreutils.sh"
     fresh "shell/config/plain.sh"
   fresh-options
 done
