@@ -18,14 +18,18 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh"
-    fresh "shell/config/ruby.sh"
-    fresh "shell/config/node.sh"
+    fresh "shell/config/asdf.sh"
+    fresh "shell/config/asdf.d/*.sh"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
     fresh "shell/config/coreutils.sh"
     fresh "shell/config/plain.sh"
   fresh-options
 done
+
+fresh-options --file="${HOME}/.asdfrc"
+  fresh "shell/asdf/legacy-version-file"
+fresh-options
 
 # scripts
 fresh "bin/*" --bin
