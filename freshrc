@@ -21,7 +21,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
     fresh "shell/config/symlink.sh"
-    fresh chriskempson/base16-shell scripts/base16-tomorrow-night.sh
+    fresh "chriskempson/base16-shell" "scripts/base16-tomorrow-night.sh"
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh"
