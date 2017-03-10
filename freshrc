@@ -8,6 +8,7 @@ fresh "freshshell/fresh" "bin/fresh" --bin
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
 less_history_dir="${XDG_CACHE_HOME}/less"
 everydayhero_code_dir="${HOME}/Code/everydayhero"
+bash_git_prompt_dir="${XDG_DATA_HOME}/bash-git-prompt"
 
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
@@ -16,7 +17,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/xdg.sh"
     fresh "shell/functions/*.sh"
     fresh "shell/config/path.sh"
-    fresh "shell/config/prompt.sh"
+    fresh "shell/config/prompt.sh" --filter="sed s,INSTALL_DIR,$bash_git_prompt_dir,"
     fresh "shell/config/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
@@ -49,6 +50,9 @@ $FRESH_LOCAL/less/create-history-directory.sh "${less_history_dir}"
 
 # plain
 $FRESH_LOCAL/plain/install.sh "${everydayhero_code_dir}"
+
+# bash-git-prompt
+$FRESH_LOCAL/bash-git-prompt/install.sh "${bash_git_prompt_dir}"
 
 # vim
 $FRESH_LOCAL/vim/create-xdg-directories.sh
