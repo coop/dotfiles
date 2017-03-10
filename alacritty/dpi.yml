@@ -1,0 +1,5 @@
+# The FreeType rasterizer needs to know the device DPI for best results
+# (changes require restart)
+dpi:
+  x: 276.0
+  y: 276.0

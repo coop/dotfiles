@@ -72,6 +72,22 @@ fresh-options --file="${XDG_CONFIG_HOME}/git/ignore" --marker="#"
   fresh "github/gitignore" "Node.gitignore"
 fresh-options
 
+# alacritty
+fresh-options --file="${XDG_CONFIG_HOME}/alacritty/alacritty.yml" --marker="#"
+  fresh "alacritty/env.yml"
+  fresh "alacritty/dimensions.yml"
+  fresh "alacritty/dpi.yml"
+  fresh "alacritty/tabspaces.yml"
+  fresh "alacritty/fonts.yml"
+  fresh "alacritty/render-timer.yml"
+  fresh "alacritty/cursor.yml"
+  fresh "alacritty/colors.yml"
+  fresh "alacritty/visual-bell.yml"
+  fresh "alacritty/key-bindings.yml"
+  fresh "alacritty/mouse.yml"
+  fresh "alacritty/shell.yml"
+fresh-options
+
 fresh-options --bin
   fresh "git/bin/*"
 

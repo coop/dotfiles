@@ -1,0 +1,5 @@
+# Window dimensions in character columns and lines
+# (changes require restart)
+dimensions:
+  columns: 100
+  lines: 20

@@ -1,0 +1,26 @@
+# When true, bold text is drawn using the bright variant of colors.
+draw_bold_text_with_bright_colors: true
+
+# Font configuration (changes require restart)
+font:
+  normal:
+    family: "Source Code Pro"
+    style: Medium
+  bold:
+    family: "Source Code Pro"
+    style: Bold
+  italic:
+    family: "Source Code Pro"
+    style: Italic
+
+  # Point size of the font
+  size: 8.0
+  # Offset is the extra space around each character. offset.y can be thought of
+  # as modifying the linespacing, and offset.x as modifying the letter spacing.
+  offset:
+    x: 14.0
+    y: 16.0
+
+  # OS X only: use thin stroke font rendering. Thin strokes are suitable for
+  # retina displays, but for non-retina you probably want this set to false.
+  use_thin_strokes: true
