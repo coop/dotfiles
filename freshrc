@@ -25,7 +25,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh"
-    fresh "shell/config/asdf.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
+    fresh "asdf/source.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
     fresh "shell/config/coreutils.sh"
@@ -41,7 +41,7 @@ fresh "bin/*" --bin
 $FRESH_LOCAL/asdf/install.sh "${asdf_install_dir}"
 
 fresh-options --file="${HOME}/.asdfrc"
-  fresh "shell/asdf/legacy-version-file"
+  fresh "asdf/legacy-version-file"
 fresh-options
 
 # less
