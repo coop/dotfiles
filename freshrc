@@ -4,6 +4,9 @@ source "${FRESH_LOCAL}/shell/config/xdg.sh"
 # fresh
 fresh "freshshell/fresh" "bin/fresh" --bin
 
+# install directories
+asdf_install_dir="${XDG_DATA_HOME}/asdf"
+
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
   fresh-options --file=$file --marker="#"
@@ -20,8 +23,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh"
-    fresh "shell/config/asdf.sh"
-    fresh "shell/config/asdf.d/*.sh"
+    fresh "shell/config/asdf.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
     fresh "shell/config/coreutils.sh"
@@ -30,12 +32,15 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
   fresh-options
 done
 
+# scripts
+fresh "bin/*" --bin
+
+# asdf
+$FRESH_LOCAL/asdf/install.sh "${asdf_install_dir}"
+
 fresh-options --file="${HOME}/.asdfrc"
   fresh "shell/asdf/legacy-version-file"
 fresh-options
-
-# scripts
-fresh "bin/*" --bin
 
 # vim
 $FRESH_LOCAL/vim/create-xdg-directories.sh
@@ -97,5 +102,6 @@ fresh-options --bin
 fresh-options
 
 fresh_after_build() {
+  $FRESH_LOCAL/asdf/install-plugins.sh
   $FRESH_LOCAL/vim/vim-plug/plug-install.sh
 }
