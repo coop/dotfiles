@@ -7,6 +7,7 @@ fresh "freshshell/fresh" "bin/fresh" --bin
 # install directories
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
 less_history_dir="${XDG_CACHE_HOME}/less"
+everydayhero_code_dir="${HOME}/Code/everydayhero"
 
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
@@ -28,7 +29,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
     fresh "shell/config/coreutils.sh"
-    fresh "shell/config/plain.sh"
+    fresh "plain/source.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
     fresh "shell/config/pssh.sh"
   fresh-options
 done
@@ -45,6 +46,9 @@ fresh-options
 
 # less
 $FRESH_LOCAL/less/create-history-directory.sh "${less_history_dir}"
+
+# plain
+$FRESH_LOCAL/plain/install.sh "${everydayhero_code_dir}"
 
 # vim
 $FRESH_LOCAL/vim/create-xdg-directories.sh
