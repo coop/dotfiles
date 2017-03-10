@@ -24,6 +24,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/direnv.sh"
     fresh "shell/config/coreutils.sh"
     fresh "shell/config/plain.sh"
+    fresh "shell/config/pssh.sh"
   fresh-options
 done
 
