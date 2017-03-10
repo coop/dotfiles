@@ -6,6 +6,7 @@ fresh "freshshell/fresh" "bin/fresh" --bin
 
 # install directories
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
+less_history_dir="${XDG_CACHE_HOME}/less"
 
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
@@ -15,7 +16,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/functions/*.sh"
     fresh "shell/config/path.sh"
     fresh "shell/config/prompt.sh"
-    fresh "shell/config/less.sh"
+    fresh "shell/config/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
     fresh "shell/config/symlink.sh"
@@ -41,6 +42,9 @@ $FRESH_LOCAL/asdf/install.sh "${asdf_install_dir}"
 fresh-options --file="${HOME}/.asdfrc"
   fresh "shell/asdf/legacy-version-file"
 fresh-options
+
+# less
+$FRESH_LOCAL/less/create-history-directory.sh "${less_history_dir}"
 
 # vim
 $FRESH_LOCAL/vim/create-xdg-directories.sh
