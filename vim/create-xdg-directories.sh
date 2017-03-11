@@ -1,3 +1,10 @@
 #!/bin/bash
 
-mkdir -p $XDG_CACHE_HOME/vim/{undo,swap,backup} $XDG_CONFIG_HOME/vim
+main() {
+  cache_dir="$1"
+  config_dir="$2"
+
+  mkdir -p $cache_dir/{undo,swap,backup} $config_dir
+}
+
+main "$@"
