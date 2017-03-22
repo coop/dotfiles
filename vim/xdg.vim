@@ -40,5 +40,5 @@
 
 set directory=CACHE_DIR/swap,~/,/tmp
 set backupdir=CACHE_DIR/backup,~/,/tmp
-set viminfo='100,nCACHE_DIR/viminfo
+set viminfo="100,nCACHE_DIR/viminfo"
 set runtimepath+=CONFIG_DIR,CONFIG_DIR/after,$VIM,$VIMRUNTIME
