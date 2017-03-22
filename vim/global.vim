@@ -1,10 +1,6 @@
 syntax enable
 
-" Remove viminfo limits
-set viminfo='100,h
-
 " Misc. config
-set nocompatible
 set backspace=indent,eol,start  " Why would I ever want backspace to not work?
 set scrolloff=3                 " Start scrolling 3 lines before edge
 set showmatch                   " Highlight matching brackets on entry
@@ -18,7 +14,6 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set autoindent
-filetype indent on
 set foldmethod=indent                      " Fold based on source indentation
 set foldlevelstart=99                      " Expand all folds by default
 
