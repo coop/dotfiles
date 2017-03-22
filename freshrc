@@ -11,6 +11,7 @@ everydayhero_code_dir="${HOME}/Code/everydayhero"
 bash_git_prompt_dir="${XDG_DATA_HOME}/bash-git-prompt"
 vim_config_dir="${XDG_CONFIG_HOME}/vim"
 vim_cache_dir="${XDG_CACHE_HOME}/vim"
+vim_data_dir="${XDG_DATA_HOME}/vim"
 
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
@@ -61,12 +62,12 @@ $FRESH_LOCAL/vim/create-xdg-directories.sh "${vim_cache_dir}" "${vim_config_dir}
 
 fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
   fresh "vim/required.vim"
-  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,CACHE_DIR,$vim_cache_dir,"
-  fresh "vim/vim-plug/before.vim"
+  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir,"
+  fresh "vim/vim-plug/before.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
   fresh "vim/plugins/*.vim"
   fresh "vim/vim-plug/after.vim"
   fresh "vim/global.vim"
-  fresh "vim/config/*.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,CACHE_DIR,$vim_cache_dir,"
+  fresh "vim/config/*.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,CACHE_DIR,$vim_cache_dir,g"
   fresh "jasoncodes/dotfiles" "vim/config/fast_escape.vim"
   fresh "vim/mappings.vim"
   fresh "jasoncodes/dotfiles" "vim/mappings/disable-cursor-keys.vim"
