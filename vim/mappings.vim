@@ -2,7 +2,7 @@
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " Directory lising
-nnoremap <LEADER>n :n .<CR>
+nnoremap <LEADER>n :Explore<CR>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
