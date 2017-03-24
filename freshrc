@@ -121,4 +121,5 @@ fresh_after_build() {
   $FRESH_LOCAL/vim/vim-plug/plug-install.sh
   $FRESH_LOCAL/vim/vim-plug/plug-clean.sh
   $FRESH_LOCAL/hub/install-hub.sh
+  $FRESH_LOCAL/docker/install-docker-compose.sh
 }
