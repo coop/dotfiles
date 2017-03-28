@@ -12,7 +12,7 @@ install_plugin() {
   local path_to_plugin=$2
 
   if ! asdf plugin-list | grep -q "${plugin}"; then
-    path_to_plugin "${plugin}"
+    "$path_to_plugin" "${plugin}"
   fi
 }
 
