@@ -29,7 +29,7 @@ downloaded_binary() {
 }
 
 main() {
-  local version="${1:-$VERSION}"
+  local version="${1:-$HUB_VERSION}"
 
   if [[ $(uname -s) == "Linux" ]]; then
     if ! downloaded_binary $version; then
