@@ -5,6 +5,27 @@ mkdir -p $XDG_MAN_HOME/man1 $XDG_BIN_HOME
 # fresh
 fresh "freshshell/fresh" "bin/fresh" --bin
 
+which_dist() {
+  case $(uname -s) in
+    Darwin) echo "mac";;
+    Linux) echo "linux";;
+  esac
+}
+
+fresh-dist() {
+  local file="$1"
+
+  fresh-options --ignore-missing
+    fresh "$@"
+    if echo "$file" | grep --quiet universal; then
+      shift
+      file=$(echo "$file" | sed "s,universal,$(which_dist),")
+
+      fresh "$file" "$@"
+    fi
+  fresh-options
+}
+
 # install directories
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
 less_history_dir="${XDG_CACHE_HOME}/less"
@@ -32,7 +53,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "asdf/source.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
-    fresh "shell/config/coreutils.sh"
+    fresh-dist "shell/config/coreutils.universal.sh"
     fresh "plain/source.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
     fresh "shell/config/pssh.sh"
     fresh "shell/config/rg.sh"
