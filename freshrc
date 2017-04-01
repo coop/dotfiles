@@ -60,6 +60,9 @@ $FRESH_LOCAL/bash-git-prompt/install.sh "${bash_git_prompt_dir}"
 # vim
 $FRESH_LOCAL/vim/install.sh "${vim_cache_dir}" "${vim_config_dir}" "${vim_data_dir}"
 
+# chromedriver
+$FRESH_LOCAL/chromedriver/install-chromedriver.sh
+
 fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
   fresh "vim/required.vim"
   fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir, | sed s,DATA_DIR,$vim_data_dir,"
