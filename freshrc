@@ -1,5 +1,6 @@
 # xdg
 source "${FRESH_LOCAL}/shell/config/xdg.sh"
+mkdir -p $XDG_MAN_HOME/man1 $XDG_BIN_HOME
 
 # fresh
 fresh "freshshell/fresh" "bin/fresh" --bin
@@ -19,7 +20,6 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/bashrc.sh"
     fresh "shell/config/xdg.sh"
     fresh "shell/functions/*.sh"
-    fresh "shell/config/path.sh"
     fresh "shell/config/prompt.sh" --filter="sed s,INSTALL_DIR,$bash_git_prompt_dir,"
     fresh "shell/config/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
     fresh "shell/config/history.sh"
@@ -35,6 +35,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/coreutils.sh"
     fresh "plain/source.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
     fresh "shell/config/pssh.sh"
+    fresh "shell/config/rg.sh"
   fresh-options
 done
 
@@ -62,6 +63,9 @@ $FRESH_LOCAL/vim/install.sh "${vim_cache_dir}" "${vim_config_dir}" "${vim_data_d
 
 # chromedriver
 $FRESH_LOCAL/chromedriver/install-chromedriver.sh
+
+# ripgrep
+$FRESH_LOCAL/rg/install-rg.sh
 
 fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
   fresh "vim/required.vim"
@@ -125,5 +129,4 @@ fresh_after_build() {
   $FRESH_LOCAL/vim/vim-plug/plug-clean.sh
   $FRESH_LOCAL/hub/install-hub.sh
   $FRESH_LOCAL/docker/install-docker-compose.sh
-  $FRESH_LOCAL/rg/install-rg.sh
 }

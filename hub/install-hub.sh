@@ -41,7 +41,14 @@ main() {
       download_binary "$version" | tar -zxf -
       ignore_output popd
 
-      mv "$tmp_dir/$(binary_name $version)/bin/hub" "$HOME/bin"
+      # binary
+      mv "$tmp_dir/$(binary_name $version)/bin/hub" "${XDG_BIN_HOME}"
+
+      # man pages
+      find "$tmp_dir/$(binary_name $version)/share/man/man1/" -mindepth 1 | \
+        grep -v txt | \
+        xargs -I{} cp {} "${XDG_MAN_HOME}/man1/"
+
       rm -rf $tmp_dir
     fi
   else

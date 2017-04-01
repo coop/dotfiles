@@ -29,8 +29,8 @@ main() {
     if ! downloaded_binary $version; then
       echo "Installing chromedriver v$version"
 
-      download_binary "$version" | gunzip - > "$HOME/bin/chromedriver"
-      chmod +x "$HOME/bin/chromedriver"
+      download_binary "$version" | gunzip - > "${XDG_BIN_HOME}/chromedriver"
+      chmod +x "${XDG_BIN_HOME}/chromedriver"
     fi
   else
     echo "Unsupported distribution"

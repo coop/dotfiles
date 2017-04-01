@@ -41,7 +41,16 @@ main() {
       download_binary "$version" | tar -zxf -
       ignore_output popd
 
-      mv "$tmp_dir/$(binary_name $version)/rg" "$HOME/bin"
+      # binary
+      mv "$tmp_dir/$(binary_name $version)/rg" "${XDG_BIN_HOME}"
+
+      # man pages
+      mv "$tmp_dir/$(binary_name $version)/rg.1" "${XDG_MAN_HOME}/man1/"
+
+      # bash completion
+      mkdir -p "${XDG_DATA_HOME}/rg"
+      mv "$tmp_dir/$(binary_name $version)/complete/rg.bash-completion" "${XDG_DATA_HOME}/rg"
+
       rm -rf $tmp_dir
     fi
   else

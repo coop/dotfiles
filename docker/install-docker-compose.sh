@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DOCKER_COMPOSE_VERSION="${1:-1.12.0-rc1}"
-INSTALL_LOCATION="$HOME/bin/docker-compose"
+INSTALL_LOCATION="${XDG_BIN_HOME}/docker-compose"
 
 ignore_output() {
   "$@" > /dev/null 2>&1
