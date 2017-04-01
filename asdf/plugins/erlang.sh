@@ -3,7 +3,7 @@
 main() {
   local plugin="$1"
 
-  asdf plugin-add "${erlang}" https://github.com/asdf-vm/asdf-erlang.git
+  asdf plugin-add "${plugin}" https://github.com/asdf-vm/asdf-erlang.git
 }
 
 main "$@"
