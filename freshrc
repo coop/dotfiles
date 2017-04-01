@@ -26,11 +26,23 @@ fresh-dist() {
   fresh-options
 }
 
+fresh-bashrc() {
+  for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
+    fresh "$@" --file="$file" --marker="#"
+  done
+}
+
+fresh-vimrc() {
+  fresh "$@" --file="${vim_config_dir}/vimrc" --marker="\""
+}
+
+fresh-install() {
+  local file="$1" && shift
+
+  "$FRESH_LOCAL/$file" "$@"
+}
+
 # install directories
-asdf_install_dir="${XDG_DATA_HOME}/asdf"
-less_history_dir="${XDG_CACHE_HOME}/less"
-everydayhero_code_dir="${HOME}/Code/everydayhero"
-bash_git_prompt_dir="${XDG_DATA_HOME}/bash-git-prompt"
 vim_config_dir="${XDG_CONFIG_HOME}/vim"
 vim_cache_dir="${XDG_CACHE_HOME}/vim"
 vim_data_dir="${XDG_DATA_HOME}/vim"
@@ -41,69 +53,49 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/bashrc.sh"
     fresh "shell/config/xdg.sh"
     fresh "shell/functions/*.sh"
-    fresh "shell/config/prompt.sh" --filter="sed s,INSTALL_DIR,$bash_git_prompt_dir,"
-    fresh "shell/config/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
     fresh "shell/config/symlink.sh"
-    fresh "chriskempson/base16-shell" "scripts/base16-tomorrow-night.sh"
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh" --filter="sed s,CONFIG_DIR,$vim_config_dir,"
-    fresh "asdf/source.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
     fresh-dist "shell/config/coreutils.universal.sh"
-    fresh "plain/source.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
     fresh "shell/config/pssh.sh"
-    fresh "shell/config/rg.sh"
   fresh-options
 done
 
-# scripts
-fresh "bin/*" --bin
-
-# asdf
-$FRESH_LOCAL/asdf/install.sh "${asdf_install_dir}"
-
-fresh-options --file="${HOME}/.asdfrc"
-  fresh "asdf/legacy-version-file"
-fresh-options
+# dnssimple
+fresh "dnssimple/bin/dnssimple.sh" --bin="$XDG_BIN_HOME/dnssimple"
 
 # less
-$FRESH_LOCAL/less/create-history-directory.sh "${less_history_dir}"
+less_history_dir="${XDG_CACHE_HOME}/less"
+fresh-install "less/create-history-directory.sh" "${less_history_dir}"
+fresh-bashrc "less/bash/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
 
 # plain
-$FRESH_LOCAL/plain/install.sh "${everydayhero_code_dir}"
+everydayhero_code_dir="$HOME/Code/everydayhero"
+fresh-install "plain/install.sh" "$everydayhero_code_dir"
+fresh-bashrc "plain/bash/plain.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
 
 # bash-git-prompt
-$FRESH_LOCAL/bash-git-prompt/install.sh "${bash_git_prompt_dir}"
+bash_git_prompt_dir="${XDG_DATA_HOME}/bash-git-prompt"
+fresh-install "bash-git-prompt/install.sh" "${bash_git_prompt_dir}"
+fresh-bashrc "bash-git-prompt/bash/bash-git-prompt.sh" --filter="sed s,INSTALL_DIR,$bash_git_prompt_dir,"
 
-# vim
-$FRESH_LOCAL/vim/install.sh "${vim_cache_dir}" "${vim_config_dir}" "${vim_data_dir}"
+# asdf
+asdf_install_dir="${XDG_DATA_HOME}/asdf"
+fresh-install "asdf/install.sh" "$asdf_install_dir"
+fresh-bashrc "asdf/bash/asdf.sh" --filter="sed s,INSTALL_DIR,$asdf_install_dir,"
+fresh "asdf/bash/legacy-version-file" --file="$HOME/.asdfrc"
 
 # chromedriver
-$FRESH_LOCAL/chromedriver/install-chromedriver.sh
-
-# ripgrep
-$FRESH_LOCAL/rg/install-rg.sh
-
-fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
-  fresh "vim/required.vim"
-  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir, | sed s,DATA_DIR,$vim_data_dir,"
-  fresh "vim/vim-plug/before.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
-  fresh "vim/plugins/*.vim"
-  fresh "vim/vim-plug/after.vim"
-  fresh "vim/global.vim"
-  fresh "vim/config/*.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,CACHE_DIR,$vim_cache_dir,g"
-  fresh "jasoncodes/dotfiles" "vim/config/fast_escape.vim"
-  fresh "vim/mappings.vim"
-  fresh "jasoncodes/dotfiles" "vim/mappings/disable-cursor-keys.vim"
-fresh-options
+fresh-install "chromedriver/install.sh"
 
 # git
-$FRESH_LOCAL/git/create-xdg-directories.sh
-$FRESH_LOCAL/git/create-local-config.sh
+fresh-install "git/create-xdg-directories.sh"
+fresh-install "git/create-local-config.sh"
 
 fresh-options --file="${XDG_CONFIG_HOME}/git/config" --marker="#"
   fresh "git/config"
@@ -136,10 +128,42 @@ fresh-options --file="${XDG_CONFIG_HOME}/alacritty/alacritty.yml" --marker="#"
   fresh "alacritty/shell.yml"
 fresh-options
 
+# vim
+fresh-install "vim/install.sh" "${vim_cache_dir}" "${vim_config_dir}" "${vim_data_dir}"
+
+fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
+  fresh "vim/required.vim"
+  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir, | sed s,DATA_DIR,$vim_data_dir,"
+  fresh "vim/global.vim"
+  fresh "vim/config/*.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,CACHE_DIR,$vim_cache_dir,g"
+  fresh "jasoncodes/dotfiles" "vim/config/fast_escape.vim"
+  fresh "vim/mappings.vim"
+  fresh "jasoncodes/dotfiles" "vim/mappings/disable-cursor-keys.vim"
+fresh-options
+
+# vim-plug -- vim plugins are required to be defined **after** this
+fresh-install "vim-plug/install.sh" "${vim_data_dir}"
+fresh-vimrc "vim-plug/vim/plug-begin.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
+
+# base16
+fresh-bashrc "chriskempson/base16-shell" "scripts/base16-tomorrow-night.sh"
+fresh-vimrc "base16/vim/base16.vim"
+
+# rest of vim plugins
+fresh-vimrc "vim/plugins/*.vim"
+
+# rg
+fresh-install "rg/install.sh"
+fresh-bashrc "rg/bash/rg.sh"
+fresh-vimrc "rg/vim/rg.vim"
+
+# vim-plug end
+fresh-vimrc "vim-plug/vim/plug-end.vim"
+
+fresh-install "hub/install-hub.sh"
+fresh-install "docker/install-docker-compose.sh"
+
 fresh_after_build() {
-  $FRESH_LOCAL/asdf/install-plugins.sh
-  $FRESH_LOCAL/vim/vim-plug/plug-install.sh
-  $FRESH_LOCAL/vim/vim-plug/plug-clean.sh
-  $FRESH_LOCAL/hub/install-hub.sh
-  $FRESH_LOCAL/docker/install-docker-compose.sh
+  fresh-install "vim-plug/plug-install.sh"
+  fresh-install "vim-plug/plug-clean.sh"
 }

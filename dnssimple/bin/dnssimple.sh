@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DNSIMPLE_TOKEN=123 DNSIMPLE_ACCOUNT_ID=123 ./ddns.sh timcorp.io thedarktower
+# DNSIMPLE_TOKEN=123 DNSIMPLE_ACCOUNT_ID=123 ./dnssimple timcorp.io thedarktower
 
 set -euo pipefail
 
