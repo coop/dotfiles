@@ -58,11 +58,11 @@ $FRESH_LOCAL/plain/install.sh "${everydayhero_code_dir}"
 $FRESH_LOCAL/bash-git-prompt/install.sh "${bash_git_prompt_dir}"
 
 # vim
-$FRESH_LOCAL/vim/create-xdg-directories.sh "${vim_cache_dir}" "${vim_config_dir}"
+$FRESH_LOCAL/vim/install.sh "${vim_cache_dir}" "${vim_config_dir}" "${vim_data_dir}"
 
 fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
   fresh "vim/required.vim"
-  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir,"
+  fresh "vim/xdg.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir,g | sed s,CACHE_DIR,$vim_cache_dir, | sed s,DATA_DIR,$vim_data_dir,"
   fresh "vim/vim-plug/before.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
   fresh "vim/plugins/*.vim"
   fresh "vim/vim-plug/after.vim"
