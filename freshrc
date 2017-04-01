@@ -115,14 +115,6 @@ fresh-options --file="${XDG_CONFIG_HOME}/alacritty/alacritty.yml" --marker="#"
   fresh "alacritty/shell.yml"
 fresh-options
 
-fresh-options --bin
-  fresh "git/bin/*"
-
-  for file in {authors,back,commits-since,contrib,delete-branch,delete-merged-branches,delete-tag,effort,guilt,show-merged-branches,show-unmerged-branches,summary}; do
-    fresh "tj/git-extras" "bin/git-${file}"
-  done
-fresh-options
-
 fresh_after_build() {
   $FRESH_LOCAL/asdf/install-plugins.sh
   $FRESH_LOCAL/vim/vim-plug/plug-install.sh
