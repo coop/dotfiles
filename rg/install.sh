@@ -28,35 +28,57 @@ downloaded_binary() {
   ignore_output command -v rg && rg --version | grep --quiet "$version"
 }
 
+install_linux() {
+  local version="$1"
+
+  if ! downloaded_binary $version; then
+    echo "Installing rg v$version"
+
+    tmp_dir=$(mktemp --directory)
+
+    ignore_output pushd $tmp_dir
+    download_binary "$version" | tar -zxf -
+    ignore_output popd
+
+    # binary
+    mv "$tmp_dir/$(binary_name $version)/rg" "${XDG_BIN_HOME}"
+
+    # man pages
+    mv "$tmp_dir/$(binary_name $version)/rg.1" "${XDG_MAN_HOME}/man1/"
+
+    # bash completion
+    mkdir -p "${XDG_DATA_HOME}/rg"
+    mv "$tmp_dir/$(binary_name $version)/complete/rg.bash-completion" "${XDG_DATA_HOME}/rg"
+
+    rm -rf $tmp_dir
+  fi
+}
+
+install_mac() {
+  local version="$1"
+
+  if ! downloaded_binary $version; then
+    echo "Installing rg v$version"
+
+    brew install ripgrep
+  fi
+}
+
 main() {
   local version="${1:-$RG_VERSION}"
+  local dist="$(uname -s)"
 
-  if [[ $(uname -s) == "Linux" ]]; then
-    if ! downloaded_binary $version; then
-      echo "Installing rg v$version"
-
-      tmp_dir=$(mktemp --directory)
-
-      ignore_output pushd $tmp_dir
-      download_binary "$version" | tar -zxf -
-      ignore_output popd
-
-      # binary
-      mv "$tmp_dir/$(binary_name $version)/rg" "${XDG_BIN_HOME}"
-
-      # man pages
-      mv "$tmp_dir/$(binary_name $version)/rg.1" "${XDG_MAN_HOME}/man1/"
-
-      # bash completion
-      mkdir -p "${XDG_DATA_HOME}/rg"
-      mv "$tmp_dir/$(binary_name $version)/complete/rg.bash-completion" "${XDG_DATA_HOME}/rg"
-
-      rm -rf $tmp_dir
-    fi
-  else
-    echo "Unsupported distribution"
-    exit 1
-  fi
+  case "$dist" in
+    Linux)
+      install_linux "$version"
+      ;;
+    Darwin)
+      install_mac "$version"
+      ;;
+    *)
+      echo "Don't know how to install rg on $dist"
+      exit 1
+  esac
 }
 
 main "$@"

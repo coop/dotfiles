@@ -22,20 +22,42 @@ downloaded_binary() {
   ignore_output command -v chromedriver && chromedriver --version | grep --quiet "$version"
 }
 
+install_linux() {
+  local version="$1"
+
+  if ! downloaded_binary $version; then
+    echo "Installing chromedriver v$version"
+
+    download_binary "$version" | gunzip - > "${XDG_BIN_HOME}/chromedriver"
+    chmod +x "${XDG_BIN_HOME}/chromedriver"
+  fi
+}
+
+install_mac() {
+  local version="$1"
+
+  if ! downloaded_binary $version; then
+    echo "Installing chromedriver v$version"
+
+    brew install chromedriver
+  fi
+}
+
 main() {
   local version="${1:-$CHROMEDRIVER_VERSION}"
+  local dist="$(uname -s)"
 
-  if [[ $(uname -s) == "Linux" ]]; then
-    if ! downloaded_binary $version; then
-      echo "Installing chromedriver v$version"
-
-      download_binary "$version" | gunzip - > "${XDG_BIN_HOME}/chromedriver"
-      chmod +x "${XDG_BIN_HOME}/chromedriver"
-    fi
-  else
-    echo "Unsupported distribution"
-    exit 1
-  fi
+  case "$dist" in
+    Linux)
+      install_linux "$version"
+      ;;
+    Darwin)
+      install_mac "$version"
+      ;;
+    *)
+      echo "Don't know how to install chromedriver on $dist"
+      exit 1
+  esac
 }
 
 main "$@"
