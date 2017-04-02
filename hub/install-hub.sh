@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HUB_VERSION="${1:-2.3.0-pre9}"
+HUB_VERSION="${1:-2.2.9}"
 
 ignore_output() {
   "$@" > /dev/null 2>&1

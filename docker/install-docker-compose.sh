@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_COMPOSE_VERSION="${1:-1.12.0-rc1}"
+DOCKER_COMPOSE_VERSION="${1:-1.11.2}"
 INSTALL_LOCATION="${XDG_BIN_HOME}/docker-compose"
 
 ignore_output() {
