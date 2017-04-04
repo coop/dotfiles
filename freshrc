@@ -146,8 +146,10 @@ fresh-install "vim-plug/install.sh" "${vim_data_dir}"
 fresh-vimrc "vim-plug/vim/plug-begin.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
 
 # base16
-fresh-bashrc "chriskempson/base16-shell" "scripts/base16-tomorrow-night.sh"
-fresh-vimrc "base16/vim/base16.vim"
+fresh-install "base16/install-shell.sh" "$XDG_DATA_HOME/base16/shell"
+fresh-bashrc "base16/bash/base16-theme.sh" --filter="sed s,INSTALL_DIR,$XDG_DATA_HOME/base16/shell,"
+fresh-install "base16/install-vim.sh" "$XDG_DATA_HOME/base16/vim"
+fresh-vimrc "base16/vim/base16-theme.vim"
 
 # rest of vim plugins
 fresh-vimrc "vim/plugins/*.vim"
