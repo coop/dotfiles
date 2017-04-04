@@ -12,23 +12,16 @@ which_dist() {
   esac
 }
 
-fresh-dist() {
-  local file="$1"
-
-  fresh-options --ignore-missing
-    fresh "$@"
-    if echo "$file" | grep --quiet universal; then
-      shift
-      file=$(echo "$file" | sed "s,universal,$(which_dist),")
-
-      fresh "$file" "$@"
-    fi
-  fresh-options
-}
-
 fresh-bashrc() {
-  for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
-    fresh "$@" --file="$file" --marker="#"
+  local file="$1" && shift
+  local dist_file="$file.$(which_dist)"
+
+  for rc in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
+    fresh "$file" "$@" --file="$rc" --marker="#"
+
+    if [[ -f "$FRESH_LOCAL/$dist_file" ]]; then
+      fresh "$dist_file" "$@" --file="$rc" --marker="#" --ignore-missing
+    fi
   done
 }
 
@@ -47,11 +40,13 @@ vim_config_dir="${XDG_CONFIG_HOME}/vim"
 vim_cache_dir="${XDG_CACHE_HOME}/vim"
 vim_data_dir="${XDG_DATA_HOME}/vim"
 
+fresh-bashrc "shell/config/bashrc.sh"
+fresh-bashrc "shell/config/xdg.sh"
+fresh-bashrc "shell/config/coreutils.sh"
+
 # bash
 for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
   fresh-options --file=$file --marker="#"
-    fresh "shell/config/bashrc.sh"
-    fresh "shell/config/xdg.sh"
     fresh "shell/functions/*.sh"
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
@@ -61,7 +56,6 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/vim.sh" --filter="sed s,CONFIG_DIR,$vim_config_dir,"
     fresh "shell/config/clipboard.sh"
     fresh "shell/config/direnv.sh"
-    fresh-dist "shell/config/coreutils.universal.sh"
     fresh "shell/config/pssh.sh"
   fresh-options
 done
