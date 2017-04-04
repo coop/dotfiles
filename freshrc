@@ -98,6 +98,9 @@ fresh-options --file="${XDG_CONFIG_HOME}/git/config" --marker="#"
   fresh "git/aliases/*"
 fresh-options
 
+fresh "git/bin/git-prune-all" --bin="$XDG_BIN_HOME/git-prune-all"
+fresh "git/bin/git-push-each" --bin="$XDG_BIN_HOME/git-push-each"
+
 fresh-options --file="${XDG_CONFIG_HOME}/git/ignore" --marker="#"
   fresh "github/gitignore" "Global/macOS.gitignore"
   fresh "github/gitignore" "Global/Tags.gitignore"
