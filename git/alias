@@ -1,5 +1,7 @@
+[commit]
+  verbose = true
 [alias]
-  c = commit -v
+  c = commit
   fixup = commit --fixup
   amend = commit --amend
   s = status

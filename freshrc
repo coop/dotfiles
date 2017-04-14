@@ -109,6 +109,13 @@ fresh-options --file="${XDG_CONFIG_HOME}/git/ignore" --marker="#"
   fresh "github/gitignore" "Node.gitignore"
 fresh-options
 
+# gnupg
+gpg_home_dir="$XDG_CONFIG_HOME/gnupg"
+fresh "gnupg/config/gpg.conf" --file="$gpg_home_dir/gpg.conf" --marker="#"
+fresh "gnupg/git/gpg.git" --file="${XDG_CONFIG_HOME}/git/config" --marker="#"
+fresh-bashrc "gnupg/bash/gpg.sh" --filter="sed s,GPG_HOME_DIR,$gpg_home_dir,"
+fresh-install "gnupg/install.sh" "$gpg_home_dir"
+
 # alacritty
 fresh-options --file="${XDG_CONFIG_HOME}/alacritty/alacritty.yml" --marker="#"
   fresh "alacritty/env.yml"
