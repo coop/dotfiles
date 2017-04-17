@@ -51,6 +51,7 @@ for file in "${HOME}/.bash_profile" "${HOME}/.bashrc"; do
     fresh "shell/config/history.sh"
     fresh "shell/config/case-insensitive-globbing.sh"
     fresh "shell/config/symlink.sh"
+    fresh "shell/config/prompt.sh"
     fresh "shell/config/fresh.sh"
     fresh "shell/config/editor.sh"
     fresh "shell/config/vim.sh" --filter="sed s,CONFIG_DIR,$vim_config_dir,"
@@ -72,11 +73,6 @@ fresh-bashrc "less/bash/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
 everydayhero_code_dir="$HOME/Code/everydayhero"
 fresh-install "plain/install.sh" "$everydayhero_code_dir"
 fresh-bashrc "plain/bash/plain.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
-
-# bash-git-prompt
-bash_git_prompt_dir="${XDG_DATA_HOME}/bash-git-prompt"
-fresh-install "bash-git-prompt/install.sh" "${bash_git_prompt_dir}"
-fresh-bashrc "bash-git-prompt/bash/bash-git-prompt.sh" --filter="sed s,INSTALL_DIR,$bash_git_prompt_dir,"
 
 # asdf
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
