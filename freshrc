@@ -69,11 +69,6 @@ less_history_dir="${XDG_CACHE_HOME}/less"
 fresh-install "less/create-history-directory.sh" "${less_history_dir}"
 fresh-bashrc "less/bash/less.sh" --filter="sed s,INSTALL_DIR,$less_history_dir,"
 
-# plain
-everydayhero_code_dir="$HOME/Code/everydayhero"
-fresh-install "plain/install.sh" "$everydayhero_code_dir"
-fresh-bashrc "plain/bash/plain.sh" --filter="sed s,INSTALL_DIR,$everydayhero_code_dir,"
-
 # asdf
 asdf_install_dir="${XDG_DATA_HOME}/asdf"
 fresh-install "asdf/install.sh" "$asdf_install_dir"
