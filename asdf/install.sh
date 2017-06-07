@@ -24,7 +24,7 @@ main() {
     git clone https://github.com/asdf-vm/asdf.git "${install_dir}"
   fi
 
-  find "asdf/plugins" -maxdepth 1 -name *.sh | install_plugins
+  find "${FRESH_LOCAL}/asdf/plugins" -maxdepth 1 -name *.sh | install_plugins
 }
 
 main "$@"
