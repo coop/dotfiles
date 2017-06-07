@@ -137,7 +137,7 @@ fresh-options --file="${vim_config_dir}/vimrc" --marker="\""
 fresh-options
 
 # vim-plug -- vim plugins are required to be defined **after** this
-fresh-install "vim-plug/install.sh" "${vim_data_dir}"
+fresh-install "vim-plug/install.sh" "${vim_config_dir}"
 fresh-vimrc "vim-plug/vim/plug-begin.vim" --filter="sed s,CONFIG_DIR,$vim_config_dir, | sed s,DATA_DIR,$vim_data_dir,g"
 
 # rest of vim plugins
