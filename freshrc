@@ -103,6 +103,7 @@ fresh-options
 # gnupg
 gpg_home_dir="$XDG_CONFIG_HOME/gnupg"
 fresh "gnupg/config/gpg.conf" --file="$gpg_home_dir/gpg.conf" --marker="#"
+fresh "gnupg/config/gpg-agent.conf" --file="$gpg_home_dir/gpg-agent.conf" --marker="#"
 fresh "gnupg/git/gpg.git" --file="${XDG_CONFIG_HOME}/git/config" --marker="#"
 fresh-bashrc "gnupg/bash/gpg.sh" --filter="sed s,GPG_HOME_DIR,$gpg_home_dir,"
 fresh-install "gnupg/install.sh" "$gpg_home_dir"
